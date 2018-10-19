@@ -1,29 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="UTF-8">
-	<title>Lihat Jabatan</title>
+<html xmlns:th="http://thymeleaf.org">
 
+<head>
+	<title>Detail Jabatan</title>
+	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
+
 <body>
-	<nav th:replace= "fragments/fragment :: navbar"></nav>
-	
-	<h2 th:text="'Nama: ' + ${jabatan.nama}"></h2>
-	<h2 th:text="'Deskripsi '+ ${jabatan.deskripsi}"></h2>
-	<h2 th:text="'Gaji Pokok: Rp ' + ${jabatan.gaji_pokok}"></h2>
-	
-	<form th:action="@{/jabatan/ubah}" name=dataJabatan method = "GET">
-		<input type="hidden" th:value="${jabatan.id}"/>
-		<button type="submit" class="btn btn-primary">Ubah Jabatan</button>
-	</form>
-	<br>
-	<br>
-	
-	<form th:action="@{/jabatan/hapus}" th:object="${jabatan}" method = "GET">
-		<input type="hidden" th:field="${jabatan.id}"/>
-		<button type="submit" class="btn btn-primary">Hapus Jabatan</button>
-	</form>
+	<nav th:replace="fragments/fragment :: navbar "></nav>
+	<div id="Content" class="container-full-bg">
+	<h2 class="ml-3" th:text="'Detail Jabatan ' + ${jabatan.nama}"></h2>
+		<div class="row">
+		<div class="col-md-8 mb-3 mt-4 ml-4">
+			<div class="card">
+				<div class="card-header">
+					<h2 th:text="${jabatan.nama}">Informasi Jabatan</h2>
+				</div>
+				<div class="card-body">
+					<div class="row" name="nama">
+						<div class="col">Nama </div>
+						<div class="col" th:text="${jabatan.nama}"></div>
+					</div>
+					<br>
+					<div class="row" name="gaji">
+						<div class="col">Deskripsi </div>
+						<div class="col" th:text="${jabatan.deskripsi}"></div>
+					</div>
+					<br>
+					<div class="row" name="gaji">
+						<div class="col">Gaji Pokok </div>
+						<div class="col" th:text="'Rp. ' + ${jabatan.gaji_pokok}"></div>
+					</div>
+					<br>
+					<div class="row" name="jumlahPegawai">
+						<div class="col">Jumlah Pegawai</div>
+						<div class="col" th:text="${jmlPegawai}"></div>
+					</div>
+					<div align="center">
+					<br>
+					<br>
+						<form th:action="@{/jabatan/ubah}" th:object="${jabatan}" method = "GET">
+							<input type="hidden" th:field="${jabatan.id}"/>
+							<button type="submit" class="btn btn-primary">Ubah Jabatan</button>
+						</form>
+						<br>
+						<br>
+						<form th:action="@{/jabatan/hapus}" th:object="${jabatan}" method="POST">
+							<input type="hidden" th:field="${jabatan.id}" />
+							<button class="btn btn-primary" type="submit"> Hapus Jabatan</button>
+						</form>
+						
+					</div>
+							
+					
+				</div>
+				
+			</div>
+		</div>
+		</div>
+	</div>
 </body>
 </html>

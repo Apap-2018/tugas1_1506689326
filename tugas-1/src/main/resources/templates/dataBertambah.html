@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Tambah Jabatan</title>
+	<title>Tambah Pegawai</title>
 
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
 	<nav th:replace= "fragments/fragment :: navbar"></nav>
-	<h2>Berhasil Menambahkan Data</h2>
+	<h2>Sukses!</h2>
+	<h3 th:text="'Pegawai dengan nip ' + ${pegawai.nip}+' berhasil ditambahkan'"></h3>
 </body>
 </html>

@@ -26,8 +26,8 @@ public class JabatanServiceImpl implements JabatanService {
 	}
 
 	@Override
-	public void deleteJabatan(JabatanModel id) {
-		jabatandb.delete(id);
+	public void deleteJabatan(JabatanModel jabatan) {
+		jabatandb.delete(jabatan);
 		
 	}
 

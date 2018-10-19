@@ -10,8 +10,8 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	
-	
-	<h2 th:text="'Lihat Data Pegawai - '+ ${pegawaiTermuda.nip}"></h2>
+	<h2>Pergawai Termuda</h2>
+	<h2 th:text="'Lihat Data Pegawai Termuda- '+ ${pegawaiTermuda.nip}"></h2>
 	<br>
 	<h3 th:text="'NIP: ' + ${pegawaiTermuda.nip}"></h3>
 	<h3 th:text="'Nama: ' + ${pegawaiTermuda.nama}"></h3>
@@ -28,8 +28,7 @@
 	<h3 th:text="'Gaji : Rp'+${gajiTermuda}"></h3>
 	
 	<br>
-	
-	<h2 th:text="'Lihat Data Pegawai - '+ ${pegawaiTermuda.nip}"></h2>
+	<h2 th:text="'Lihat Data Pegawai Tertua - '+ ${pegawaiTertua.nip}"></h2>
 	<br>
 	<h3 th:text="'NIP: ' + ${pegawaiTertua.nip}"></h3>
 	<h3 th:text="'Nama: ' + ${pegawaiTertua.nama}"></h3>

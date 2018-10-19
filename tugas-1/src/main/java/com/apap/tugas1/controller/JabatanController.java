@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apap.tugas1.model.JabatanModel;
+import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.service.JabatanService;
 
 @Controller
@@ -35,13 +37,14 @@ public class JabatanController {
 	@RequestMapping("/jabatan/view")
 	private String viewJabatanById(@RequestParam(value = "id") long id, Model model) {
 		JabatanModel archive = jabatanService.getJabatanById(id);
+		model.addAttribute("jmlPegawai", archive.getPegawaiList().size());
 		model.addAttribute("jabatan", archive);
-		model.addAttribute("title", "Lihat Jabatan");
+		model.addAttribute("title", "Detail Jabatan");
 		return "view-jabatan";
 	}
 	
 	@RequestMapping(value = "/jabatan/ubah", method = RequestMethod.GET)
-	private String update(@RequestParam(value ="id") long id, Model model) {
+	private String updateJabatan(@RequestParam(value = "id") long id, Model model) {
 		JabatanModel archive = jabatanService.getJabatanById(id);
 		model.addAttribute("jabatan", archive);
 		model.addAttribute("title", "Ubah Jabatan");
@@ -55,16 +58,14 @@ public class JabatanController {
 		archive.setGaji_pokok(jabatan.getGaji_pokok());
 		archive.setNama(jabatan.getNama());
 		jabatanService.addJabatan(archive);
-		model.addAttribute("title", "Data Berubah");
+		model.addAttribute("title", "Ubah Berubah");
 		return "dataBerubah";
 		
 	}
 	
-	@RequestMapping(value="/jabatan/hapus", method= RequestMethod.POST)
-	private String deleteJabatan(@ModelAttribute JabatanModel jabatan, Model model) {
-		JabatanModel archive = jabatanService.getJabatanById(jabatan.getId());
-		jabatanService.deleteJabatan(archive);
-		model.addAttribute("title", "Menghapus Data");
+	@RequestMapping(value="/jabatan/hapus/{id_jabatan}", method = RequestMethod.GET)
+	private String delJabatan(@PathVariable(value = "id")JabatanModel jabatan) {
+		jabatanService.deleteJabatan(jabatan);
 		return "terhapus";
 	}
 	
