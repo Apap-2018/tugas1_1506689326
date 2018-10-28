@@ -7,5 +7,5 @@ import com.apap.tugas1.model.ProvinsiModel;
 
 public interface ProvinsiService {
 	List<ProvinsiModel> getAllProvinsi();
-
+	
 }

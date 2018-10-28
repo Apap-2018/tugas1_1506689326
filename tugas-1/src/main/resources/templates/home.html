@@ -66,7 +66,7 @@
 				</div>
 				<form th:action="@{/pegawai/termuda-tertua}" method="GET">
 					<div class="card-body">
-						<label for="id">Pilih Jabatan</label>
+						<label for="id">Pilih Instansi</label>
 						<select class="form-control" name="id">
 							<option value="">-</option>
 					    	<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}+ ' - ' + ${instansi.provinsi.nama}">

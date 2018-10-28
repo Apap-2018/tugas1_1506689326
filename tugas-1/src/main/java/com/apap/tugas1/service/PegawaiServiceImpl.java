@@ -1,7 +1,13 @@
 package com.apap.tugas1.service;
 
+import com.apap.tugas1.model.InstansiModel;
+import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.repository.PegawaiDB;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +35,6 @@ public class PegawaiServiceImpl implements PegawaiService {
 		pegawaiDB.save(pegawai);
 		
 	}
-
-
 
 
 }

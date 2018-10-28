@@ -29,9 +29,10 @@ public class JabatanController {
 
 	
 	@RequestMapping(value = "/jabatan/tambah", method = RequestMethod.POST)
-	private String addJabatan(@ModelAttribute JabatanModel jabatan, Model model) {
+	private String addJabatan(@ModelAttribute JabatanModel jabatan,Model model) {
 		jabatanService.addJabatan(jabatan);
-		return "dataBertambah";
+		model.addAttribute("jabatan", jabatan);
+		return "jabatanBertambah";
 	}
 	
 	@RequestMapping("/jabatan/view")
@@ -63,9 +64,18 @@ public class JabatanController {
 		
 	}
 	
-	@RequestMapping(value="/jabatan/hapus/{id_jabatan}", method = RequestMethod.GET)
-	private String delJabatan(@PathVariable(value = "id")JabatanModel jabatan) {
-		jabatanService.deleteJabatan(jabatan);
+	@RequestMapping(value="/jabatan/hapus", method= RequestMethod.POST)
+	private String deleteJabatan(@ModelAttribute JabatanModel jabatan, Model model) {
+		JabatanModel archive = jabatanService.getJabatanById(jabatan.getId());
+		
+		if(archive.getPegawaiList()==null) {
+			model.addAttribute("jabatan", archive);
+			return "terhapus";
+		}
+		jabatanService.deleteJabatan(archive);
+		
+		model.addAttribute("jabatan", archive);
+		model.addAttribute("title", "Hapus Jabatan");
 		return "terhapus";
 	}
 	

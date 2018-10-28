@@ -4,6 +4,7 @@ import com.apap.tugas1.model.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.io.Serializable;
 
@@ -162,6 +163,20 @@ public class PegawaiModel implements Serializable {
 				return gaji;
 	}
 	
+	//compareJabatan
+	private static Comparator<JabatanModel> pegawaiComparator = new Comparator<JabatanModel>() {
+		@Override
+		public int compare(JabatanModel o1, JabatanModel o2) {
+			if (o1.getGaji_pokok()<o2.getGaji_pokok()) {
+				return -1;
+			}
+			else if (o1.getGaji_pokok()>o2.getGaji_pokok()) {
+				return 1;
+			}
+			return 0;
+		}
+	};
+	
 	
 	//method hitung usia pegawai
 	public int getUsia() {
@@ -169,5 +184,20 @@ public class PegawaiModel implements Serializable {
 		LocalDate today = LocalDate.now();
 		
 		return today.getYear()-tglLahir.getYear();
+	}
+	
+	@Override
+	public String toString() {
+		return "PegawaiModel [id=" + id + ", nip=" + nip + ", nama=" + nama + ", tempatLahir=" + tempat_lahir
+				+ ", tanggalLahir=" + tanggal_lahir + ", tahunMasuk=" + tahun_masuk + ", instansi=" + instansi
+				+ ", jabatanList=" + listJabatan + "]";
+	}
+
+	public static Comparator<JabatanModel> getPegawaiComparator() {
+		return pegawaiComparator;
+	}
+
+	public static void setPegawaiComparator(Comparator<JabatanModel> pegawaiComparator) {
+		PegawaiModel.pegawaiComparator = pegawaiComparator;
 	}
 }
