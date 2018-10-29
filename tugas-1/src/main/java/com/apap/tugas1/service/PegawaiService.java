@@ -15,6 +15,11 @@ import com.apap.tugas1.model.PegawaiModel;
 public interface PegawaiService {
 	void addPegawai(PegawaiModel pegawai);
 	PegawaiModel getPegawaiDetailByNip(String nip);
-
+	PegawaiModel getDataPegawaiById(long id);
+	List<PegawaiModel> getPegawaiByProvinsi(Long provinsiId);
+	List<PegawaiModel> getPegawaiByJabatan(JabatanModel jabatan);
+	List<PegawaiModel> getPegawaiByInstansi(InstansiModel instansi);
+	List<PegawaiModel> getPegawaiByInstansiJabatan(InstansiModel instansi, JabatanModel jabatan);
+	List<PegawaiModel> getPegawaiByProvinsiJabatan(Long peg, JabatanModel jabatan);
 
 }

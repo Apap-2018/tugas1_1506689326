@@ -9,9 +9,8 @@
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	
-	<h2>Pergawai Termuda</h2>
-	<h2 th:text="'Lihat Data Pegawai Termuda- '+ ${pegawaiTermuda.nip}"></h2>
+	<br>
+	<h2 th:text="'Data Pegawai Termuda'"></h2>
 	<br>
 	<h3 th:text="'NIP: ' + ${pegawaiTermuda.nip}"></h3>
 	<h3 th:text="'Nama: ' + ${pegawaiTermuda.nama}"></h3>
@@ -20,29 +19,28 @@
 	<h3 th:text="'Tahun Masuk: ' + ${pegawaiTermuda.tahun_masuk}"></h3>
 	
 	<h3 th:text="'Nama Instansi: ' + ${pegawaiTermuda.instansi.nama} + ' - ' + ${pegawaiTermuda.instansi.provinsi.nama}"></h3>	
-	
+	<h3 th:text="'Jabatan: '"></h3>
 	<h3 th:each="jabatan : ${pegawaiTermuda.listJabatan}">
-		<h3 th:text="${jabatan.nama}"></h3>
+		<h3 th:text="'- ' +${jabatan.nama}"></h3>
 	</h3>
-	
-	<h3 th:text="'Gaji : Rp'+${gajiTermuda}"></h3>
-	
+	<h3 th:text="'Gaji : Rp '+${gajiTermuda}"></h3>
 	<br>
-	<h2 th:text="'Lihat Data Pegawai Tertua - '+ ${pegawaiTertua.nip}"></h2>
+
+	<h3>=======================================================</h3>
+	<br>
+	<h2 th:text="'Data Pegawai Tertua'"></h2>
 	<br>
 	<h3 th:text="'NIP: ' + ${pegawaiTertua.nip}"></h3>
 	<h3 th:text="'Nama: ' + ${pegawaiTertua.nama}"></h3>
 	<h3 th:text="'Tempat Lahir: ' + ${pegawaiTertua.tempat_lahir}"></h3>
 	<h3 th:text="'Tanggal Lahir: ' + ${pegawaiTertua.tanggal_lahir}"></h3>
 	<h3 th:text="'Tahun Masuk: ' + ${pegawaiTertua.tahun_masuk}"></h3>
-	
 	<h3 th:text="'Nama Instansi: ' + ${pegawaiTertua.instansi.nama} + ' - ' + ${pegawaiTertua.instansi.provinsi.nama}"></h3>	
-	
+	<h3 th:text="'Jabatan: '"></h3>
 	<h3 th:each="jabatan : ${pegawaiTertua.listJabatan}">
-		<h3 th:text="${jabatan.nama}"></h3>
+		<h3 th:text="'- ' + ${jabatan.nama}"></h3>
 	</h3>
-	
-	<h3 th:text="'Gaji : Rp'+${gajiTertua}"></h3>
-		
+	<h3 th:text="'Gaji : Rp '+${gajiTertua}"></h3>
+	<br>
 </body>
 </html>

@@ -9,8 +9,10 @@
 </head>
 <body>
 	<nav th:replace= "fragments/fragment :: navbar"></nav>
+	<div style="margin-left: 40px; margin-right: 700px;">
+	<br>
 	<h3>Tambah Jabatan</h3>
-	
+	<br>
 	<form th:action="@{/jabatan/tambah}" th:object="${jabatan}" method="POST">
 			<label for="nama">Nama :</label>
 			<input type = "text" name="nama" required = "true" class="form-control"/>
@@ -21,7 +23,8 @@
 			<label for="gaji">Gaji Pokok:</label>
 			<input type = "number" name="gaji_pokok"  required = "true" class="form-control"/>
 			<p></p>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">Simpan</button>
 	</form>
+	</div>
 </body>
 </html>

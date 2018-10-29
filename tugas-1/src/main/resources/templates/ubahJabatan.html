@@ -9,9 +9,10 @@
 </head>
 <body>
 	<nav th:replace= "fragments/fragment :: navbar"></nav>
-	<h3>Ubah Jabatan</h3>
+	<br>
+	<h3 style="margin-left: 40px; margin-right: 40px">Ubah Jabatan</h3>
 	
-	<form th:action="@{/jabatan/ubah}" th:object="${jabatan}" method="POST">
+	<form style="margin-left: 40px" th:action="@{/jabatan/ubah}" th:object="${jabatan}" method="POST">
 			<input type = "hidden" name="id" th:value ="*{id}"/>
 			<p></p>
 			<label for="nama">Nama :</label>
@@ -23,7 +24,7 @@
 			<label for="gaji">Gaji Pokok:</label>
 			<input type = "number" name="gaji_pokok"  required = "true" th:value="${jabatan.gaji_pokok}" class="form-control"/>
 			<p></p>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit" class="btn btn-primary">Simpan</button>
 	</form>
 </body>
 </html>

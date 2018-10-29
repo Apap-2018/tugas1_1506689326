@@ -4,6 +4,7 @@ import com.apap.tugas1.model.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.io.Serializable;
@@ -81,7 +82,7 @@ public class PegawaiModel implements Serializable {
    //untuk nyambung sama jabatan
 	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "jabatan_pegawai", joinColumns = {@JoinColumn(name="id_pegawai")}, inverseJoinColumns = {@JoinColumn(name="id_jabatan")})
-	private List<JabatanModel> listJabatan;
+	private List<JabatanModel> listJabatan=new ArrayList<JabatanModel>();
 	
 	public void setInstansi(InstansiModel instansi) {
 		this.instansi = instansi;
@@ -163,21 +164,6 @@ public class PegawaiModel implements Serializable {
 				return gaji;
 	}
 	
-	//compareJabatan
-	private static Comparator<JabatanModel> pegawaiComparator = new Comparator<JabatanModel>() {
-		@Override
-		public int compare(JabatanModel o1, JabatanModel o2) {
-			if (o1.getGaji_pokok()<o2.getGaji_pokok()) {
-				return -1;
-			}
-			else if (o1.getGaji_pokok()>o2.getGaji_pokok()) {
-				return 1;
-			}
-			return 0;
-		}
-	};
-	
-	
 	//method hitung usia pegawai
 	public int getUsia() {
 		LocalDate tglLahir = this.getTanggal_lahir().toLocalDate();
@@ -193,11 +179,4 @@ public class PegawaiModel implements Serializable {
 				+ ", jabatanList=" + listJabatan + "]";
 	}
 
-	public static Comparator<JabatanModel> getPegawaiComparator() {
-		return pegawaiComparator;
-	}
-
-	public static void setPegawaiComparator(Comparator<JabatanModel> pegawaiComparator) {
-		PegawaiModel.pegawaiComparator = pegawaiComparator;
-	}
 }

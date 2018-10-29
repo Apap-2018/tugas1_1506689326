@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Cari Pegawai</title>
+		
+		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+		
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+		<link rel="stylesheet" type="text/css" th:href="@{//cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css}"/> 
+		<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+		<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    	<script type="text/javascript" src=https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js></script>
+    	<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+			
+	</head>
+	
+	<body  style="margin:30;padding:30">
+		<nav th:replace="fragments/fragment :: navbar"></nav>
+		<div style="margin-left: 20px; margin-right: 20px;">
+			<br>
+			<h3>Cari Pegawai</h3>
+			<br>
+			<form th:action="@{/pegawai/cari}" id="search" method="get">
+				<table>
+					<tr>
+						<td style="text-align: left;" height="50">Provinsi</td>
+						<td>
+							<select  class="form-control" name="idProvinsi" id="provinsi"form="search">
+						      <option disabled="disabled" selected="selected" >Pilih Provinsi</option>
+						      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}" ></option>
+						    </select>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;" height="50">Nama Instansi </td>
+						<td>
+							<select class="form-control" name="idInstansi" id="instansi" form="search">
+			                    <option disabled="disabled" selected="selected" >Pilih Instansi</option>
+								<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+			                </select>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: left;" height="50">Jabatan</td>
+						<td>
+							<select class="form-control" name="idJabatan" id="jabatan" form="search">
+								<option disabled="disabled" selected="selected" >Pilih Jabatan</option>
+								<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+							</select>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<input type="submit" value="Cari" class="btn btn-primary mb-2">
+			</form>
+			<br>
+			<table id="cariPegawai">
+				<thead>
+					<th>NIP</th>
+					<th>Nama</th>
+					<th>Tempat Lahir</th>
+					<th>Tanggal Lahir</th>
+					<th>Tahun Masuk</th>
+					<th>Nama Instansi</th>
+					<th>Jabatan</th>
+				</thead>
+				<span th:each="pegawai : ${result}">
+					<tr>
+						<td th:text="${pegawai.nip}"></td>
+						<td th:text="${pegawai.nama}"></td>
+						<td th:text="${pegawai.tempat_lahir}"></td>
+						<td th:text="${pegawai.tanggal_lahir}"></td>
+						<td th:text="${pegawai.tahun_masuk}"></td>
+						<td th:text="${pegawai.instansi.nama}"></td>
+						<td>
+							<ol>
+								<li th:each="jabatan: ${pegawai.listJabatan}" th:text="${jabatan.nama}"></li>
+							</ol>
+						</td>
+					</tr>
+				</span>
+			</table>
+		</div>
+	</body>
+	<script>
+	$(document).ready( function () {
+	    $('#cariPegawai').DataTable();
+	} );
+	$('#provinsi').change(
+	     function() {
+	         $.getJSON("/instansi/getFromProvinsi", {
+	             idProvinsi : $(this).val(),
+	             ajax : 'true'
+	         }, function(data) {
+	             var instansi = '<option value="">Pilih Instansi</option>';
+	             var len = data.length;
+	             for ( var i = 0; i < len; i++) {
+	                 instansi = instansi + '<option value="' + data[i].id + '">'
+	                         + data[i].nama + '</option>';
+	             }
+	             instansi = instansi + '</option>';
+	             $('#instansi').html(html);
+	         });
+	     });
+	</script>
+</html>

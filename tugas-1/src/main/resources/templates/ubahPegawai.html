@@ -1,51 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymleaf.org">
 <head>
 	<title>Ubah Pegawai</title>
+	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>	
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h2>Hello!</h2>
+			<div class="card ">
+				<div class="card-header" style="text-align:center">
+					 <h3 class="text-center">Ubah Pegawai</h3>
+				</div>
+				<div class="card-body">
+					<div class="container">
+						<form  th:action="@{/pegawai/ubah}" th:object="${pegawai}" method ="POST">
+  							<div class="form-group">
+    						<label for="nama">Nama</label>
+    						<input type="text" class="form-control" name="nama" th:value="*{nama}" required="true" >
+  							</div>
+  							<div class="form-group">
+    						<label for="tempatLahir">Tempat Lahir</label>
+    						<input type="text" class="form-control" name="tempat_lahir" th:value="*{tempat_lahir}" required="true" >
+  							</div>
+  							<div class="form-group">
+    						<label for="tanggalLahir">Tanggal Lahir</label>
+    						<input type="date" class="form-control" name="tanggal_lahir" th:value="*{tanggal_lahir}" required="true" >
+  							</div>
+  							<div class="form-group">
+  							<label for="tahunMasuk">Tahun Masuk</label>
+    						<input type="number" class="form-control" name="tahun_masuk" th:value="*{tahun_masuk}" required="true" >
+  							</div>
+  							<div class="form-group">
+  							<label for="provinsi">Provinsi</label>
+							<span th:if="*{instansi} == null">
+								<select  class="form-control" required="true" name="provinsi" id="provinsi" th:value="${listProvinsi}">
+						      		<option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}" ></option>
+						    	</select>
+							</span>
+							<span th:unless="*{instansi} == null">
+								<select  class="form-control" required="true" name="provinsi" id="provinsi" th:value="*{instansi.provinsi}">
+						      		<option  th:value="*{instansi.provinsi.id}" selected="selected" th:text="*{instansi.provinsi.nama}"></option>
+			                    	<option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}" ></option>
+						    	</select>
+							</span>
+							</div>
+							<div class="form-group">
+							<label for="instansi">Instansi</label>
+							<span th:if="*{instansi} == null">
+								<select class="custom-select" th:field="*{instansi}" id="instansi" required="true">
+   	 								<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}" ></option>
+								</select>	
+							</span>
+							<span th:unless="*{instansi} == null">
+								<select class="custom-select" th:value="*{instansi}" id="instansi" name="instansi" required="true">
+			                    	<option  th:value="*{instansi.id}" selected="selected" th:text="*{instansi.nama}"></option>
+			                    	<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}" ></option>
+			                	</select>	
+							</span>
+  							</div>
+  							<div class="form-group">
+  							<label for="jabatan">Jabatan</label><br>
+							<span th:each="jabatan, iterationStat : *{listJabatan}">
+							<select style="margin: 5px;"class="custom-select col-md-6" name="listJabatan">
+								<option th:each="jabatan : ${listJabatan}" th:field="*{listJabatan[__${iterationStat.index}__]}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+							</select>
+							<button type="submit" class="btn btn-danger btn-sm" style="margin: 5px;" name="hapus" th:value="${iterationStat.index}" th:style="${iterationStat.count} == 1 ? 'display: none;' : ''">Delete Jabatan</button>
+							</span>
+							<button type="submit" class="btn btn-info btn-sm" name="tambahJabatan" style="margin: 5px;">Tambah Jabatan</button>
+  							</div>
+  							<button type="submit" class="btn btn-primary">Simpan</button>
+						</form>
+					</div>
+				</div>
+			</div>
+	</body>
 	
-	<h3>Ubah Data Pegawai</h3>
-	<form th:action="@{/pegawai/ubah}" th:object="${pegawai}" method="POST">
-		Nama: <br>
-		<input type="text" name="nama" th:value="${pegawai.nama}"/>
-		<br>
-		Tempat Lahir: <br>
-		<input type="text" name="tempat_lahir" th:value="${pegawai.tempat_lahir}"/>
-		<br>
-		Tanggal Lahir: <br>
-		<input type="date" name="tanggal_lahir" th:value="${pegawai.tanggal_lahir}"/>
-		<br>
-		Tahun Masuk: <br>
-		<input type="number" name="tahun_masuk" th:value="${pegawai.tahun_masuk}"/>
-		<br>
-		Nama Instansi: <br>
-		<select name="instansi" th:value="${pegawai.instansi}">
-			<option th:each = "instansi : ${instansiList}"
-					th:value = "${instansi.id}"
-					th:text = "${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
-		</select><br>
-		Jabatan: <br>
-		<div th:each = "j,rowStat : *{listJabatan}">
-			<select name = "listJabatan">
-				<option th:each = "jabatan : ${jabatanList}"
-						th:value = "${jabatan.id}"
-						th:field="*{listJabatan[__${rowStat.index}__].id}"
-						th:text = "${jabatan.nama}"></option>
-			</select>
-			<button type="submit" name="removeRow" th:value="${rowStat.index}">Remove Row</button>
-			<br><br>
-		</div>
-		<button type="submit" name="addRow">Add Row</button>
-		<br><br>
-		<button type="submit">Submit</button>
-	</form>
-</body>
-
+	<script th:inline="javascript">
+	$('#provinsi').change(
+	     function() {
+	    	 console.log($(this).val());
+	    	 value = $(this).val();
+	         $.getJSON("/instansi/getInstansiByProvinsi", {
+	             idProvinsi : value,
+	             ajax : 'true'
+	         }, function(data) {
+	             var html = '';
+	             var size = data.length;
+	             for ( var i = 0; i < size; i++) {
+	                 html += '<option value="' + data[i].id + '">' + data[i].nama + '</option>';
+	             }
+	             $('#instansi').html(html);
+	         });
+	     });
+	</script>
+	
+	
 </html>

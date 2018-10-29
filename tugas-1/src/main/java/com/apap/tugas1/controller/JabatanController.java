@@ -15,18 +15,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.service.JabatanService;
+import com.apap.tugas1.service.PegawaiService;
 
 @Controller
 public class JabatanController {
 	@Autowired
 	private JabatanService jabatanService;
 	
+	@Autowired
+	private PegawaiService pegawaiService;
+	
+	//Menambahkan Jabatan
 	@RequestMapping(value = "/jabatan/tambah", method = RequestMethod.GET)
 	private String add(Model model) {
 		model.addAttribute("jabatan", new JabatanModel());
 		return "add-jabatan";
 	}
-
 	
 	@RequestMapping(value = "/jabatan/tambah", method = RequestMethod.POST)
 	private String addJabatan(@ModelAttribute JabatanModel jabatan,Model model) {
@@ -35,20 +39,22 @@ public class JabatanController {
 		return "jabatanBertambah";
 	}
 	
+	//Melihat Detail Jabatan
 	@RequestMapping("/jabatan/view")
-	private String viewJabatanById(@RequestParam(value = "id") long id, Model model) {
+	private String viewJabatanById(@RequestParam(value = "id") Long id, Model model) {
 		JabatanModel archive = jabatanService.getJabatanById(id);
-		model.addAttribute("jmlPegawai", archive.getPegawaiList().size());
+		List<PegawaiModel> pegawai = pegawaiService.getPegawaiByJabatan(archive);
+		int jmlPegawai = pegawai.size();
+		model.addAttribute("jmlPegawai", jmlPegawai);
 		model.addAttribute("jabatan", archive);
-		model.addAttribute("title", "Detail Jabatan");
 		return "view-jabatan";
 	}
 	
+	//Mengupdate Jabatan
 	@RequestMapping(value = "/jabatan/ubah", method = RequestMethod.GET)
 	private String updateJabatan(@RequestParam(value = "id") long id, Model model) {
 		JabatanModel archive = jabatanService.getJabatanById(id);
 		model.addAttribute("jabatan", archive);
-		model.addAttribute("title", "Ubah Jabatan");
 		return "ubahJabatan";
 	}
 	
@@ -59,11 +65,11 @@ public class JabatanController {
 		archive.setGaji_pokok(jabatan.getGaji_pokok());
 		archive.setNama(jabatan.getNama());
 		jabatanService.addJabatan(archive);
-		model.addAttribute("title", "Ubah Berubah");
 		return "dataBerubah";
 		
 	}
 	
+	//Menghapus Jabatan
 	@RequestMapping(value="/jabatan/hapus", method= RequestMethod.POST)
 	private String deleteJabatan(@ModelAttribute JabatanModel jabatan, Model model) {
 		JabatanModel archive = jabatanService.getJabatanById(jabatan.getId());
@@ -75,10 +81,11 @@ public class JabatanController {
 		jabatanService.deleteJabatan(archive);
 		
 		model.addAttribute("jabatan", archive);
-		model.addAttribute("title", "Hapus Jabatan");
 		return "terhapus";
 	}
 	
+	
+	//Menampilkan semua jabatan yang ada
 	@RequestMapping(value="/jabatan/viewall")
 	private String viewAll(Model model) {
 		List<JabatanModel> listJabatan = jabatanService.getAllJabatan();

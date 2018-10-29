@@ -1,5 +1,6 @@
 package com.apap.tugas1.service;
 import com.apap.tugas1.model.InstansiModel;
+import com.apap.tugas1.model.ProvinsiModel;
 import com.apap.tugas1.repository.InstansiDB;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class InstansiServiceImpl implements InstansiService{
 	public void addInstansi(InstansiModel instansi) {
 		// TODO Auto-generated method stub
 		instansiDB.save(instansi);
+	}
+
+	@Override
+	public List<InstansiModel> getInstansiByProvinsi(ProvinsiModel ProvinsiModel) {
+		// TODO Auto-generated method stub
+		return instansiDB.findByProvinsi(ProvinsiModel);
 	}
 
 }
