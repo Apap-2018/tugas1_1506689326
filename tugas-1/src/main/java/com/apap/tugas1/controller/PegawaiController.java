@@ -74,7 +74,6 @@ public class PegawaiController {
 		model.addAttribute("listInstansi", listInstansi);
 		model.addAttribute("listJabatan", jabatanList);
 		model.addAttribute("listProvinsi", provinsiList);
-		//model.addAttribute("tambahpegawai", true);
 		return "addPegawai";
 	}
 	
@@ -89,7 +88,6 @@ public class PegawaiController {
 		model.addAttribute("listInstansi", instansi);
 		pegawai.getListJabatan().add(new JabatanModel());
 	    model.addAttribute("pegawai", pegawai);
-	    //model.addAttribute("tambahpegawai", true);
 	    return "addPegawai";
 	}
 	
